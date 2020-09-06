@@ -7,29 +7,20 @@ title : Longest Palindrome Substring
 description : Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
 """
 def longestPalindrome(s: str) -> str:
-    if len(s) < 2 or s == s[::-1]:
+    def expand(left: int, right: int) -> str:
+        while left >= 0 and right <= len(s) - 1 and s[left] == s[right]:
+            left -= 1
+            right += 1
+        return s[left + 1:right]
+
+    if len(s) == 1 or s == s[::-1]:
         return s
 
-    max = ''
-    for i in range(len(s) - 2):
-        if s[i] == s[i + 1]:
-            left, right = i, i + 1
-            while left >= 0 and right < len(s):
-                left -= 1
-                right += 1
-                if s[left] != s[right]:
-                    max = s[left + 1:right]
-                    break
-        elif s[i] == s[i + 2]:
-            left, right = i, i + 2
-            while left >= 0 and right < len(s):
-                left -= 1
-                right += 1
-                if s[left] != s[right]:
-                    max = s[left + 1:right]
-                    break
+    result = ''
+    for i in range(len(s) - 1):
+        result = max(result, expand(i, i + 1), expand(i, i + 2), key=len)
 
-    return max
+    return result
 
 
 if __name__ == '__main__':
