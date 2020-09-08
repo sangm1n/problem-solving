@@ -44,7 +44,7 @@ def addTwoNumbers(l1: ListNode, l2: ListNode) -> ListNode:
                 current_node = current_node.next
             current_node.next = new_node
 
-    return total
+    return result
 
 
 if __name__ == '__main__':

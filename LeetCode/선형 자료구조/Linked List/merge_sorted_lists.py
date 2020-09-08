@@ -34,7 +34,7 @@ def mergeTwoLists(l1: ListNode, l2: ListNode) -> ListNode:
             current_node = result
             while current_node.next:
                 current_node = current_node.next
-            result = new_node
+            current_node.next = new_node
 
     return result
 
