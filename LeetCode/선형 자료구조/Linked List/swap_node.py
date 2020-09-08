@@ -14,13 +14,20 @@ class ListNode:
 
 
 def swapPairs(head: ListNode) -> ListNode:
-    current = head
+    root = prev = ListNode(None)
+    prev.next = head
 
-    while current and current.next:
-        current.val, current.next.val = current.next.val, current.val
-        current = current.next.next
+    while head and head.next:
+        b = head.next
+        head.next = b.next
+        b.next = head
 
-    return head
+        prev.next = b
+
+        head = head.next
+        prev = prev.next.next
+
+    return root.next
 
 
 if __name__ == '__main__':
