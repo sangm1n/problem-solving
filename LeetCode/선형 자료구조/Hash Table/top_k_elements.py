@@ -25,3 +25,5 @@ if __name__ == '__main__':
 
     print(topKFrequent(nums1, k1))
     print(topKFrequent(nums2, k2))
+
+    
