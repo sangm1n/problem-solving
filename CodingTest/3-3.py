@@ -12,12 +12,13 @@ description : 숫자 카드 게임은 여러 개의 숫자 카드 중에서 가�
     - 따라서 처음에 카드를 골라낼 행을 선택할 때, 이후에 해당 행에서 가장 숫자가 낮은 카드를 뽑을 것을 고려하여
     최종적으로 가장 높은 숫자의 카드를 뽑을 수 있도록 전략을 세워야 한다.
 """
+
 N, M = map(int, input().split())
 
 result = 0
 for i in range(N):
-    nums = list(map(int, input().split()))
-    min_num = min(nums)
-    result = max(result, min_num)
+    arr = list(map(int, input().split()))
+    min_value = min(arr)
+    result = max(min_value, result)
 
 print(result)
