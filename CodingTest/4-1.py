@@ -15,21 +15,19 @@ description : 여행가 A는 N X N 크기의 정사각형 공간 위에 서 있�
 이때 여행가 A가 N X N 크기의 정사각형 공간을 벗어나는 움직임은 무시된다.
 계획서가 주어졌을 때 여행가 A가 최종적으로 도착할 지점의 좌표를 출력하는 프로그램을 작성하시오.
 """
+
 N = int(input())
-plans = input().split()
-
-x, y = 1, 1
-
-# L, R, U, D에 따른 이동 방향
+direction = list(map(str, input().split()))
+x, y = (1, 1)
 dx = [0, 0, -1, 1]
 dy = [-1, 1, 0, 0]
-letters = ['L', 'R', 'U', 'D']
+move = ['L', 'R', 'U', 'D']
 
-for plan in plans:
-    for i in range(len(letters)):
-        if plan == letters[i]:
-            nx = x + dx[i]
-            ny = y + dy[i]
+for direct in direction:
+    idx = move.index(direct)
+
+    nx = x + dx[idx]
+    ny = y + dy[idx]
 
     if nx < 1 or ny < 1 or nx > N or ny > N:
         continue
@@ -37,3 +35,4 @@ for plan in plans:
     x, y = nx, ny
 
 print(x, y)
+
