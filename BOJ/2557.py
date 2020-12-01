@@ -1,3 +1,3 @@
 # Hello Wolrd! 출력
 
-print('Hello Wolrd!')
+print('Hello World!')
