@@ -5,8 +5,10 @@ e-mail : dltkd96als@naver.com
 
 title : Stack
 """
+
 stack = []
 
+# 5 삽입 -> 2 삽입 -> 3 삽입 -> 7 삽입 -> 삭제 -> 1 삽입 -> 4 삽입 -> 삭제
 stack.append(5)
 stack.append(2)
 stack.append(3)

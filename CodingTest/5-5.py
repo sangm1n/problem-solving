@@ -5,6 +5,8 @@ e-mail : dltkd96als@naver.com
 
 title : Fcatorial
 """
+
+
 def factorial_iterative(n):
     result = 1
     for i in range(1, n+1):
