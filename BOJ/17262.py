@@ -19,10 +19,10 @@ fans = []
 for i in range(N):
     fans.append(list(map(int, sys.stdin.readline().split())))
 
-go = sorted(fans, key=lambda x: x[0])
-back = sorted(fans, key=lambda x: x[1])
+go_school = max(fans[i][0] for i in range(N))
+go_home = min(fans[i][1] for i in range(N))
 
-result = go[-1][0] - back[0][1]
+result = go_school - go_home
 
 if result <= 0:
     print(0)
