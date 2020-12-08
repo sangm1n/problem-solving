@@ -23,31 +23,23 @@ M = int(sys.stdin.readline())
 deliver = [list(map(int, sys.stdin.readline().split())) for _ in range(M)]
 deliver.sort(key=lambda x: (x[1], x[0]))
 
+village = [C] * (N + 1)
 total = 0
-maximum = C
-village = [0] * (N + 1)
+for i in range(len(deliver)):
+    start, end = deliver[i][0], deliver[i][1]
+    box = deliver[i][2]
+    max_capacity = min(village[start:end])
 
-idx = 0
-for i in range(1, N+1):
-    if village[i] > 0:
-        total += village[i]
-        maximum += village[i]
-        village[i] = 0
-
-    if i > deliver[idx][0]:
-        while idx < M and i != deliver[idx][0]:
-            idx += 1
-    elif i < deliver[idx][0]:
+    if max_capacity == 0:
         continue
 
-    while idx < M and deliver[idx][0] == i:
-        if deliver[idx][2] <= maximum:
-            village[deliver[idx][1]] += deliver[idx][2]
-            maximum -= deliver[idx][2]
-        else:
-            village[deliver[idx][1]] += maximum
-            maximum = 0
-
-        idx += 1
+    if box <= max_capacity:
+        for k in range(start, end):
+            village[k] -= box
+        total += box
+    else:
+        for k in range(start, end):
+            village[k] -= max_capacity
+        total += max_capacity
 
 print(total)
