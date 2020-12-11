@@ -28,7 +28,7 @@ for i in range(N):
     for j in list(map(int, input().split())):
         dic[j] += 1
 
-result = [100000000000000, 0]
+result = [N * M * 2 * 256, 0]
 key = list(dic.keys())
 
 for value in range(min(key), max(key) + 1):
