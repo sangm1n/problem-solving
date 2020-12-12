@@ -7,23 +7,24 @@
 수빈이가 지금 보고 있는 채널은 100번이다.
 """
 
-n = int(input())
-num = int(input())
-arr = set(str(x) for x in range(10))
-if num==0:
-    pass
-else:
-    error = set(input().split())
-    arr = arr-error
+import sys
+input = sys.stdin.readline
 
-result = abs(n - 100)
-for i in range(1000001):
-    boolean = True
-    for a in str(i):
-        if a not in arr:
-            boolean = False
-            break
-    if boolean is True:
-        result = min(result, abs(n-i) + len(str(i)))
+N = int(input())
+M = int(input())
+broken = list(map(int, input().split()))
+tmp = [x for x in range(10)]
+
+channel = list(set(tmp) - set(broken))
+
+result = abs(100 - N)
+for i in range(1000000):
+    flag = True
+    for j in str(i):
+        if int(j) not in channel:
+            flag = False
+
+    if flag:
+        result = min(result, len(str(i)) + abs(N - i))
 
 print(result)
