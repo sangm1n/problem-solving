@@ -29,3 +29,36 @@ description : 빙하가 깨지면서 스노우타운에 떠내려 온 죠르디�
 """
 
 
+def check(arr):
+    for x, y, a in arr:
+        if a == 0:
+            if y == 0 or [x-1, y, 1] in arr or [x+1, y, 1] in arr or [x, y-1, 0] in arr:
+                continue
+            return False
+        elif a == 1:
+            if [x, y-1, 0] in arr or [x+1, y-1, 0] in arr or ([x-1, y, 1] in arr and [x+1, y, 1] in arr):
+                continue
+            return False
+    return True
+
+
+def solution(n, build_frame):
+    result = []
+    for frame in build_frame:
+        x, y, a, b = frame
+        if b == 0:
+            result.remove([x, y, a])
+            if not check(result):
+                result.append([x, y, a])
+        elif b == 1:
+            result.append([x, y, a])
+            if not check(result):
+                result.remove([x, y, a])
+
+    return sorted(result, key=lambda x:(x[0], x[1]))
+
+
+n = 5
+build_frame = [[0, 0, 0, 1], [2, 0, 0, 1], [4, 0, 0, 1], [0, 1, 1, 1], [1, 1, 1, 1], [2, 1, 1, 1], [3, 1, 1, 1], [2, 0, 0, 0], [1, 1, 1, 0], [2, 2, 0, 1]]
+
+print(solution(n, build_frame))
