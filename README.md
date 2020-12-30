@@ -1,5 +1,5 @@
 # :computer: For my coding test
-다양하게 꾸준히 풀자
+매일매일 백준 푸는중
 
 ### :pushpin: CodeUp
   - [기초 100제](https://github.com/sangm1n/problem-solving/tree/master/CodeUp)
