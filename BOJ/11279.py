@@ -3,7 +3,7 @@ author : Lee Sang Min
 github : https://github.com/sangm1n
 e-mail : dltkd96als@naver.com
 
-title : 최소 힙
+title : 최대 힙
 description : Heap
 """
 
@@ -20,6 +20,7 @@ for _ in range(N):
         if not hq:
             print(0)
         else:
-            print(heapq.heappop(hq))
+            num = heapq.heappop(hq)
+            print(-num)
     else:
-        heapq.heappush(hq, x)
+        heapq.heappush(hq, -x)

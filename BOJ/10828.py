@@ -1,37 +1,37 @@
 """
-정수를 저장하는 스택을 구현한 다음, 입력으로 주어지는 명령을 처리하는 프로그램을 작성하시오.
+author : Lee Sang Min
+github : https://github.com/sangm1n
+e-mail : dltkd96als@naver.com
 
-명령은 총 다섯 가지이다.
-
-    - push X: 정수 X를 스택에 넣는 연산이다.
-    - pop: 스택에서 가장 위에 있는 정수를 빼고, 그 수를 출력한다. 만약 스택에 들어있는 정수가 없는 경우에는 -1을 출력한다.
-    - size: 스택에 들어있는 정수의 개수를 출력한다.
-    - empty: 스택이 비어있으면 1, 아니면 0을 출력한다.
-    - top: 스택의 가장 위에 있는 정수를 출력한다. 만약 스택에 들어있는 정수가 없는 경우에는 -1을 출력한다.
+title : 스택
+description : Stack
 """
 
 import sys
+input = sys.stdin.readline
 
-N = int(sys.stdin.readline())
-
+N = int(input())
 stack = []
 for _ in range(N):
-    command = sys.stdin.readline().rstrip()
-    command = command.split(' ')
+    instruct = list(input().split())
 
-    if command[0] == 'push':
-        num = int(command[1])
-        stack.append(num)
-
-    elif command[0] == 'pop':
-        print(-1 if not stack else stack.pop())
-
-    elif command[0] == 'size':
-        print(len(stack))
-
-    elif command[0] == 'empty':
-        print(1 if not stack else 0)
-
-    elif command[0] == 'top':
-        print(-1 if not stack else stack[-1])
-
+    if len(instruct) == 2:
+        stack.append(int(instruct[1]))
+    else:
+        if instruct[0] == 'top':
+            if not stack:
+                print(-1)
+            else:
+                print(stack[-1])
+        elif instruct[0] == 'size':
+            print(len(stack))
+        elif instruct[0] == 'pop':
+            if not stack:
+                print(-1)
+            else:
+                print(stack.pop())
+        elif instruct[0] == 'empty':
+            if not stack:
+                print(1)
+            else:
+                print(0)
