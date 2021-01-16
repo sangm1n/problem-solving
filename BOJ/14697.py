@@ -4,7 +4,7 @@ github : https://github.com/sangm1n
 e-mail : dltkd96als@naver.com
 
 title : 방 배정하기
-description : Back-tracking
+description : Dynamic Programming
 """
 
 A, B, C, N = map(int, input().split())
