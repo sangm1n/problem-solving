@@ -1,54 +1,47 @@
 """
-차세대 영농인 한나는 강원도 고랭지에서 유기농 배추를 재배하기로 하였다.
-농약을 쓰지 않고 배추를 재배하려면 배추를 해충으로부터 보호하는 것이 중요하기 때문에, 한나는 해충 방지에 효과적인 배추흰지렁이를 구입하기로 결심한다.
-이 지렁이는 배추근처에 서식하며 해충을 잡아 먹음으로써 배추를 보호한다.
-특히, 어떤 배추에 배추흰지렁이가 한 마리라도 살고 있으면 이 지렁이는 인접한 다른 배추로 이동할 수 있어, 그 배추들 역시 해충으로부터 보호받을 수 있다.
+author : Lee Sang Min
+github : https://github.com/sangm1n
+e-mail : dltkd96als@naver.com
 
-(한 배추의 상하좌우 네 방향에 다른 배추가 위치한 경우에 서로 인접해있다고 간주한다)
-
-한나가 배추를 재배하는 땅은 고르지 못해서 배추를 군데군데 심어놓았다.
-배추들이 모여있는 곳에는 배추흰지렁이가 한 마리만 있으면 되므로 서로 인접해있는 배추들이 몇 군데에 퍼져있는지 조사하면 총 몇 마리의 지렁이가 필요한지 알 수 있다.
-
-예를 들어 배추밭이 아래와 같이 구성되어 있으면 최소 5마리의 배추흰지렁이가 필요하다.
-
-(0은 배추가 심어져 있지 않은 땅이고, 1은 배추가 심어져 있는 땅을 나타낸다.)
+title : 유기농 배추
+description : DFS
 """
 
 import sys
-sys.setrecursionlimit(10000)
-input = sys.stdin.readline
+sys.setrecursionlimit(10**6)
 
 
-def dfs(i, j, arr):
-    if i < 0 or j < 0 or i > len(arr)-1 or j > len(arr[i])-1 or arr[i][j] != 1:
-        return False
+def dfs(x, y):
+    visited[x][y] = True
+    graph[x][y] = 0
 
-    if arr[i][j] == 1:
-        arr[i][j] = 0
+    for i in range(4):
+        nx = x + dx[i]
+        ny = y + dy[i]
 
-        dfs(i-1, j, arr)
-        dfs(i+1, j, arr)
-        dfs(i, j-1, arr)
-        dfs(i, j+1, arr)
-
-        return True
-
-    return False
+        if 0 <= nx < N and 0 <= ny < M and not visited[nx][ny] and graph[nx][ny] == 1:
+            visited[nx][ny] = True
+            dfs(nx, ny)
 
 
 T = int(input())
-for i in range(T):
+for _ in range(T):
     M, N, K = map(int, input().split())
-    tmp = [[0 for _ in range(M)] for _ in range(N)]
 
+    graph = [[0] * M for _ in range(N)]
+    visited = [[False] * M for _ in range(N)]
     for _ in range(K):
-        x, y = map(int, input().split())
-        tmp[y][x] = 1
+        a, b = map(int, input().split())
+        graph[b][a] = 1
+
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, -1, 1]
 
     count = 0
     for i in range(N):
         for j in range(M):
-            if dfs(i, j, tmp):
+            if graph[i][j] == 1:
+                dfs(i, j)
                 count += 1
 
     print(count)
