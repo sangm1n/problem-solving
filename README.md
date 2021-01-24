@@ -7,7 +7,7 @@
 ### :pushpin: BOJ
   - [백준 온라인 저지](https://github.com/sangm1n/problem-solving/tree/master/BOJ)
 
-### :pushpin: CodingTest
+### :pushpin: SWEA
   - [SW Expert Academy](https://github.com/sangm1n/problem-solving/tree/master/SWEA)  
 
 ### :pushpin: LeetCode
