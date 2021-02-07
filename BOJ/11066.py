@@ -7,16 +7,27 @@ title : 파일 합치기
 description : Dynamic Programming
 """
 
-T = int(input())
-for _ in range(T):
-    N = int(input())
-    books = list(map(int, input().split()))
+import math
 
-    dp = [0] * 10001
 
-    for i in range(len(books)):
-        for j in range(len(books)):
+def solve():
+    n = int(input())
+    arr = [int(x) for x in input().split()]
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+
+    for j in range(n):
+        for i in range(j, -1, -1):
             if i == j:
                 continue
 
-            
+            small = math.inf
+            for k in range(j-i):
+                small = min(small, dp[i][i+k] + dp[i+k+1][j])
+            dp[i][j] = small + sum(arr[i:j+1])
+
+    print(dp[0][n-1])
+
+
+t = int(input())
+for _ in range(t):
+    solve()
