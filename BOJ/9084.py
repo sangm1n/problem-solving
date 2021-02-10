@@ -4,7 +4,7 @@ github : https://github.com/sangm1n
 e-mail : dltkd96als@naver.com
 
 title : 동전
-description : Dynamic Programming
+description : Knapsack Problem
 """
 
 
