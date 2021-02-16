@@ -1,13 +1,21 @@
 """
-서로 다른 N개의 자연수의 합이 S라고 한다. S를 알 때, 자연수 N의 최댓값은 얼마일까?
+author : Lee Sang Min
+github : https://github.com/sangm1n
+e-mail : dltkd96als@naver.com
+
+title : 수들의 합
+description : Binary Search
 """
 
 S = int(input())
 
-idx, result = 1, 0
+result = 0
+count = 1
 while True:
-    result += idx
+    result += count
+
     if result > S:
-        print(idx-1)
         break
-    idx += 1
+    count += 1
+
+print(count-1)
