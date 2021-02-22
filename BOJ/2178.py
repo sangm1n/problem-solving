@@ -10,32 +10,29 @@ description : BFS
 from collections import deque
 
 
-def bfs(i, j, count):
+def bfs(i, j):
     q = deque()
-    q.append((i, j, count))
-    graph[i][j] = count
-    visited[i][j] = True
+    q.append((i, j))
+    visited[i][j] = 1
 
     while q:
-        x, y, cnt = q.popleft()
+        x, y = q.popleft()
 
         for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
+            nx, ny = x + dx[i], y + dy[i]
 
             if 0 <= nx < N and 0 <= ny < M and not visited[nx][ny] and graph[nx][ny] == 1:
-                visited[nx][ny] = True
-                graph[nx][ny] = cnt + 1
-                q.append((nx, ny, cnt + 1))
+                visited[nx][ny] = visited[x][y] + 1
+                q.append((nx, ny))
 
 
 N, M = map(int, input().split())
-graph = [list(map(int, input())) for _ in range(N)]
-visited = [[False] * M for _ in range(N)]
+graph = [list(map(int, list(input()))) for _ in range(N)]
 
 dx = [-1, 1, 0, 0]
 dy = [0, 0, -1, 1]
+visited = [[0] * M for _ in range(N)]
 
-bfs(0, 0, 1)
+bfs(0, 0)
 
-print(graph[N-1][M-1])
+print(visited[N-1][M-1])

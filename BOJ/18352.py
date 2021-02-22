@@ -7,37 +7,42 @@ title : 특정 거리의 도시 찾기
 description : BFS
 """
 
-from collections import deque
-
-N, M, K, X = map(int, input().split())
-
-graph = [[] for _ in range(N+1)]
-for _ in range(M):
-    a, b = map(int, input().split())
-    graph[a].append(b)
-
-tmp = [-1] * (N+1)
-tmp[X] = 0
+import heapq
 
 
-def bfs(start, tmp):
-    q = deque([start])
+def dijkstra(start):
+    q = []
+    heapq.heappush(q, (0, start))
+    distance[start] = 0
 
     while q:
-        v = q.popleft()
-        for i in graph[v]:
-            if tmp[i] == -1:
-                q.append(i)
-                tmp[i] = tmp[v] + 1
+        dist, now = heapq.heappop(q)
+
+        if distance[now] < dist:
+            continue
+
+        for i in graph[now]:
+            cost = dist + i[1]
+            if cost < distance[i[0]]:
+                distance[i[0]] = cost
+                heapq.heappush(q, (cost, i[0]))
 
 
-bfs(X, tmp)
+N, M, K, X = map(int, input().split())
+graph = [[] for _ in range(N+1)]
+distance = [int(1e9) for _ in range(N+1)]
+
+for i in range(M):
+    a, b = map(int, input().split())
+    graph[a].append((b, 1))
+
+dijkstra(X)
 
 flag = False
-for idx, val in enumerate(tmp):
-    if val == K:
+for i in range(1, N+1):
+    if distance[i] == K:
         flag = True
-        print(idx)
+        print(i)
 
 if not flag:
     print(-1)

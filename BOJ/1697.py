@@ -10,24 +10,25 @@ description : BFS
 from collections import deque
 
 
-def bfs(start, end):
+def bfs(i, visited):
     q = deque()
-    q.append((start, 0))
+    q.append(i)
+    visited[i] = 1
 
     while q:
-        val, time = q.popleft()
+        x = q.popleft()
 
-        if val == end:
-            return time
+        if x == K:
+            return visited[x] - 1
 
-        for x in [val-1, val+1, val*2]:
-            if 0 <= x < len(visited) and not visited[x]:
-                q.append((x, time+1))
-                visited[x] = True
+        for nx in (x-1, x+1, x*2):
+            if 0 <= nx <= 100000 and not visited[nx]:
+                q.append(nx)
+                visited[nx] = visited[x] + 1
 
 
 N, K = map(int, input().split())
-visited = [False] * 100001
 
-result = bfs(N, K)
-print(result)
+visited = [0] * 100001
+
+print(bfs(N, visited))
