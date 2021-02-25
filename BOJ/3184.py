@@ -7,46 +7,47 @@ title : 양
 description : DFS
 """
 
-import sys
-sys.setrecursionlimit(10**6)
 
+def dfs(i, j, graph):
+    stack = []
+    stack.append((i, j))
+    sheep, wolf = 0, 0
+    if graph[i][j] == 'o':
+        sheep += 1
+    elif graph[i][j] == 'v':
+        wolf += 1
+    graph[i][j] = '#'
 
-def dfs(x, y):
-    global sheep, wolf
+    while stack:
+        x, y = stack.pop()
 
-    if x < 0 or x > R-1 or y < 0 or y > C-1 or ground[x][y] == '#' or ground[x][y] == '-':
-        return False
+        for i in range(4):
+            nx, ny = x + dx[i], y + dy[i]
 
-    if ground[x][y] != '#':
-        if ground[x][y] == 'v':
-            wolf += 1
-        if ground[x][y] == 'o':
-            sheep += 1
-
-        ground[x][y] = '-'
-
-        dfs(x+1, y)
-        dfs(x-1, y)
-        dfs(x, y+1)
-        dfs(x, y-1)
-        return True
-    return False
+            if 0 <= nx < R and 0 <= ny < C and graph[nx][ny] != '#':
+                stack.append((nx, ny))
+                if graph[nx][ny] == 'o':
+                    sheep += 1
+                elif graph[nx][ny] == 'v':
+                    wolf += 1
+                graph[nx][ny] = '#'
+    return sheep, wolf
 
 
 R, C = map(int, input().split())
-ground = [list(input()) for _ in range(R)]
+graph = [list(input()) for _ in range(R)]
 
 dx = [-1, 1, 0, 0]
 dy = [0, 0, -1, 1]
 
-sheep_cnt, wolf_cnt = 0, 0
+sheep, wolf = 0, 0
 for i in range(R):
     for j in range(C):
-        sheep, wolf = 0, 0
-        if dfs(i, j):
-            if sheep > wolf:
-                sheep_cnt += sheep
+        if graph[i][j] != '#':
+            o, v = dfs(i, j, graph)
+            if o > v:
+                sheep += o
             else:
-                wolf_cnt += wolf
+                wolf += v
 
-print(sheep_cnt, wolf_cnt)
+print(sheep, wolf)
