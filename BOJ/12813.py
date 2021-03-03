@@ -4,7 +4,7 @@ github : https://github.com/sangm1n
 e-mail : dltkd96als@naver.com
 
 title : 이진수 연산
-description : 플로이드-워셜
+description : 비트 연산
 """
 
 A = int(input(), 2)
