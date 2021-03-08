@@ -10,16 +10,16 @@ description : Graph
 from collections import deque
 
 
-def dfs(visited, start):
+def dfs(start, visited):
     visited[start] = True
     print(start, end=' ')
 
     for i in graph[start]:
         if not visited[i]:
-            dfs(visited, i)
+            dfs(i, visited)
 
 
-def bfs(visited, start):
+def bfs(start, visited):
     q = deque()
     q.append(start)
     visited[start] = True
@@ -35,17 +35,17 @@ def bfs(visited, start):
 
 
 N, M, V = map(int, input().split())
+
 graph = [[] for _ in range(N+1)]
 for _ in range(M):
     a, b = map(int, input().split())
     graph[a].append(b)
     graph[b].append(a)
 
-for g in graph:
-    g.sort()
+[x.sort() for x in graph]
 
 visited = [False] * (N+1)
-dfs(visited, V)
+dfs(V, visited)
 print()
 visited = [False] * (N+1)
-bfs(visited, V)
+bfs(V, visited)
