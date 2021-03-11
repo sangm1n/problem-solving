@@ -1,14 +1,14 @@
 """
+author : Lee Sang Min
+github : https://github.com/sangm1n
+e-mail : dltkd96als@naver.com
 
+title : 국영수
+description : Sorting
 """
 
 N = int(input())
-students = []
+score = [list(map(str, input().split())) for _ in range(N)]
 
-for i in range(N):
-    name, korea, english, math = list(map(str, input().split()))
-    students.append((name, int(korea), int(english), int(math)))
-
-result = sorted(students, key=lambda x: (-x[1], x[2], -x[3], x[0]))
-
-[print(result[i][0]) for i in range(N)]
+score.sort(key=lambda x: (-int(x[1]), int(x[2]), -int(x[3]), x[0]))
+[print(x[0]) for x in score]

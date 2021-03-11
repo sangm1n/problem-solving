@@ -1,24 +1,13 @@
 """
+author : Lee Sang Min
+github : https://github.com/sangm1n
+e-mail : dltkd96als@naver.com
 
+title : 안테나
+description : Sorting
 """
 
 N = int(input())
-pos = list(map(int, input().split()))
-
-pos.sort()
-
-min_dist = 1e9
-answer = 0
-for i in range(len(pos)):
-    antena = pos[i]
-    result = 0
-    for j in range(len(pos)):
-        result += abs(pos[j] - pos[i])
-
-    if result < min_dist:
-        min_dist = result
-        answer = i
-    elif result == min_dist:
-        min_dist = result
-
-print(pos[answer])
+antenna = list(map(int, input().split()))
+antenna.sort()
+print(antenna[(len(antenna) // 2) - 1])

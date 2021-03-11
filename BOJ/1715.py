@@ -1,19 +1,23 @@
 """
+author : Lee Sang Min
+github : https://github.com/sangm1n
+e-mail : dltkd96als@naver.com
 
+title : 카드 정렬하기
+description : Sorting
 """
 
+import heapq
+
 N = int(input())
-cards = [int(input()) for _ in range(N)]
+q = []
+[heapq.heappush(q, int(input())) for _ in range(N)]
 
-cards.sort()
-dp = [0] * (N+1)
+result = 0
+while len(q) > 1:
+    a = heapq.heappop(q)
+    b = heapq.heappop(q)
+    heapq.heappush(q, a + b)
+    result += a + b
 
-if len(cards) <= 2:
-    print(sum(cards))
-else:
-    dp[0] = cards[0] + cards[1]
-
-    for i in range(1, len(cards) - 1):
-        dp[i] = dp[i-1] + cards[i+1]
-
-    print(sum(dp))
+print(result)

@@ -11,28 +11,23 @@ T = int(input())
 for _ in range(T):
     N, M = map(int, input().split())
     tmp = list(map(int, input().split()))
+
     gold = []
-    for i in range(0, N*M, M):
-        gold.append(list(tmp[i:i+M]))
-
-    base = [[0] * M for _ in range(N)]
-
-    for i in range(N):
-        base[i][0] = gold[i][0]
+    idx = 0
+    for _ in range(N):
+        gold.append(tmp[idx:idx+M])
+        idx += M
 
     for j in range(1, M):
         for i in range(N):
-            now = gold[i][j]
-            if i - 1 < 0:
-                base[i][j] = max(base[i][j-1] + now, base[i+1][j-1] + now)
-            elif i + 1 > N - 1:
-                base[i][j] = max(base[i-1][j-1] + now, base[i][j-1] + now)
+            if i == 0:
+                gold[i][j] = max(gold[i][j-1] + gold[i][j], gold[i+1][j-1] + gold[i][j])
+            elif i == N-1:
+                gold[i][j] = max(gold[i-1][j-1] + gold[i][j], gold[i][j-1] + gold[i][j])
             else:
-                base[i][j] = max(base[i-1][j-1] + now, base[i][j-1] + now, base[i+1][j-1] + now)
+                gold[i][j] = max(gold[i-1][j-1] + gold[i][j], gold[i][j-1] + gold[i][j], gold[i+1][j-1] + gold[i][j])
 
     result = 0
-    for i in range(N):
-        if base[i][-1] > result:
-            result = base[i][-1]
-
+    for g in gold:
+        result = max(result, max(g))
     print(result)
