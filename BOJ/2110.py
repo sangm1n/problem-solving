@@ -3,34 +3,30 @@ author : Lee Sang Min
 github : https://github.com/sangm1n
 e-mail : dltkd96als@naver.com
 
-title : 숫자판 점프
-description : DFS
+title : 공유기 설치
+description : Binary Search
 """
 
+N, C = map(int, input().split())
+wifi = [int(input()) for _ in range(N)]
+wifi.sort()
 
-def dfs(x, y, tmp):
-    global result
+min_gap, max_gap = 1, wifi[-1] - wifi[0]
+result = 0
+while min_gap <= max_gap:
+    mid_gap = (min_gap + max_gap) // 2
 
-    dx = [-1, 1, 0, 0]
-    dy = [0, 0, -1, 1]
+    count = 1
+    start = wifi[0]
+    for i in range(1, N):
+        if mid_gap <= wifi[i] - start:
+            count += 1
+            start = wifi[i]
 
-    if len(tmp) == 6:
-        result.add(tmp)
-        return
+    if count >= C:
+        result = mid_gap
+        min_gap = mid_gap + 1
+    else:
+        max_gap = mid_gap - 1
 
-    for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
-
-        if 0 <= nx < 5 and 0 <= ny < 5:
-            dfs(nx, ny, tmp + str(graph[nx][ny]))
-
-
-result = set()
-graph = [list(map(int, input().split())) for _ in range(5)]
-
-for i in range(5):
-    for j in range(5):
-        dfs(i, j, str(graph[i][j]))
-
-print(len(result))
+print(result)
