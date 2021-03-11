@@ -17,32 +17,27 @@ description : 방문 판매원 A는 많은 회사가 모여 있는 공중 미래
 방문 판매원이 회사 사이를 이동하게 되는 최소 시간을 계산하는 프로그램을 작성하시오.
 """
 
-import sys
-input = sys.stdin.readline
 INF = int(1e9)
 
 N, M = map(int, input().split())
-graph = [[INF] * (N+1) for _ in range(N+1)]
+graph = [[INF for _ in range(N)] for _ in range(N)]
 
-for i in range(1, N+1):
-    for j in range(1, N+1):
+for i in range(N):
+    for j in range(N):
         if i == j:
             graph[i][j] = 0
 
-for i in range(M):
-    start, end = map(int, input().split())
-    graph[start][end] = 1
-    graph[end][start] = 1
+tmp = [list(map(int, input().split())) for _ in range(M)]
+for a, b in tmp:
+    graph[a-1][b-1] = 1
+    graph[b-1][a-1] = 1
 
 X, K = map(int, input().split())
 
-for k in range(1, N+1):
-    for i in range(1, N+1):
-        for j in range(1, N+1):
+for k in range(N):
+    for i in range(N):
+        for j in range(N):
             graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
 
-result = graph[1][K] + graph[K][X]
-if result == INF:
-    print(-1)
-else:
-    print(result)
+result = graph[0][K-1] + graph[K-1][X-1]
+print(-1 if result >= INF else result)

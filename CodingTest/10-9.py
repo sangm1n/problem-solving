@@ -17,40 +17,42 @@ description : 온라인 강의는 선수 강의가 있을 수 있는데, 선수 
 N개의 강의 정보가 주어졌을 때, N개의 강의에 대하여 수강하기까지 걸리는 최소 시간을 각각 출력하는 프로그램을 작성하시오.
 """
 
-import sys
-import copy
 from collections import deque
-input = sys.stdin.readline
+import copy
 
-N = int(input())
-indegree = [0] * (N+1)
-graph = [[] for _ in range(N+1)]
-time = [0]
 
-for i in range(1, N+1):
-    curriculum = list(map(int, input().split()))
-    time.append(curriculum[0])
+def torpology_sort():
+    result = copy.deepcopy(time)
+    q = deque()
 
-    for j in curriculum[1:-1]:
-        graph[j].append(i)
-        indegree[i] += 1
-
-result = copy.deepcopy(time)
-q = deque()
-
-for i in range(1, N+1):
-    if indegree[i] == 0:
-        q.append(i)
-
-while q:
-    now = q.popleft()
-
-    for i in graph[now]:
-        result[i] = max(result[i], result[now] + time[i])
-        indegree[i] -= 1
-
+    for i in range(1, len(indegree)):
         if indegree[i] == 0:
             q.append(i)
 
+    while q:
+        now = q.popleft()
+
+        for i in graph[now]:
+            result[i] = max(result[i], result[now] + time[i])
+            indegree[i] -= 1
+
+            if indegree[i] == 0:
+                q.append(i)
+
+    [print(result[x]) for x in range(1, N+1)]
+
+
+N = int(input())
+indegree = [0 for _ in range(N+1)]
+time = [0 for _ in range(N+1)]
+
+graph = [[] for _ in range(N+1)]
 for i in range(1, N+1):
-    print(result[i])
+    info = list(map(int, input().split()))
+    time[i] = info[0]
+
+    for x in info[1:-1]:
+        graph[x].append(i)
+        indegree[i] += 1
+
+torpology_sort()

@@ -14,43 +14,39 @@ description : 어떤 나라에는 N개의 도시가 있다. 그리고 각 도시
 도시들이 모두 메시지를 받는 데까지 걸리는 시간은 얼마인지 계산하는 프로그램을 작성하시오.
 """
 
-import sys
 import heapq
-input = sys.stdin.readline
-INF = int(1e9)
-
-N, M, C = map(int, input().split())
-graph = [[] for _ in range(N+1)]
-for i in range(M):
-    X, Y, Z = map(int, input().split())
-    graph[X].append((Y, Z))
 
 
-def dijkstra(start):
+def dijkstra(start, distance):
     q = []
     heapq.heappush(q, (0, start))
     distance[start] = 0
 
     while q:
-        dist, now = heapq.heappop(q)
+        cost, now = heapq.heappop(q)
 
-        if distance[now] < dist:
-            continue
+        if distance[now] >= cost:
+            for idx, c in graph[now]:
+                new_cost = cost + c
 
-        for i in graph[now]:
-            cost = dist + i[1]
-            if cost < distance[i[0]]:
-                distance[i[0]] = cost
-                heapq.heappush(q, (cost, i[0]))
+                if new_cost < distance[idx]:
+                    heapq.heappush(q, (new_cost, idx))
+                    distance[idx] = new_cost
 
 
-distance = [INF] * (N+1)
-dijkstra(C)
+N, M, C = map(int, input().split())
+graph = [[] for _ in range(N+1)]
+distance = [int(1e9) for _ in range(N+1)]
 
-count, max_value = 0, 0
+for _ in range(M):
+    x, y, z = map(int, input().split())
+    graph[x].append((y, z))
+
+dijkstra(C, distance)
+count, result = 0, 0
 for d in distance:
-    if d != INF:
+    if 0 < d < int(1e9):
         count += 1
-        max_value = max(max_value, d)
+        result = max(result, d)
 
-print(count-1, max_value)
+print(count, result)

@@ -14,9 +14,6 @@ description : 학교에서 학생들에게 0번부터 N번까지의 번호를 �
 선생님이 M개의 연산을 수행할 수 있을 때, '같은 팀 여부 확인' 연산에 대한 연산 결과를 출력하는 프로그램을 작성하시오.
 """
 
-import sys
-input = sys.stdin.readline
-
 
 def find_parent(parent, x):
     if parent[x] != x:
@@ -24,25 +21,23 @@ def find_parent(parent, x):
     return parent[x]
 
 
-def union_parent(parent, a, b):
-    a = find_parent(parent, a)
-    b = find_parent(parent, b)
+def union_parent(parent, x, y):
+    x = find_parent(parent, x)
+    y = find_parent(parent, y)
 
-    if a < b:
-        parent[b] = a
+    if x > y:
+        parent[x] = y
     else:
-        parent[a] = b
+        parent[y] = x
 
 
 N, M = map(int, input().split())
-parent = [x for x in range(N+1)]
+parent = [i for i in range(N+1)]
 
 for _ in range(M):
-    cond, a, b = map(int, input().split())
-    if cond == 0:
+    status, a, b = map(int, input().split())
+
+    if status == 0:
         union_parent(parent, a, b)
-    if cond == 1:
-        if find_parent(parent, a) == find_parent(parent, b):
-            print('YES')
-        else:
-            print('NO')
+    else:
+        print("YES" if find_parent(parent, a) == find_parent(parent, b) else "NO")
