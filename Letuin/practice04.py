@@ -26,7 +26,6 @@ def turn_right(next, x, y):
 def start(i, j, pos_x, pos_y):
     q = deque()
     q.append((i, j, pos_x, pos_y))
-    visited[i][j] = 1
 
     count = 0
     while q:
@@ -37,9 +36,8 @@ def start(i, j, pos_x, pos_y):
 
         new_x, new_y = turn_left(1, dir_x, dir_y)
         nx, ny = x + new_x, y + new_y
-        if 0 <= nx < N and 0 <= ny < N and visited[nx][ny] < 2 and graph[nx][ny] == 0:
+        if 0 <= nx < N and 0 <= ny < N and graph[nx][ny] == 0:
             q.append((nx, ny, new_x, new_y))
-            visited[nx][ny] += 1
             count += 1
             continue
         else:
@@ -47,16 +45,14 @@ def start(i, j, pos_x, pos_y):
                 xx, yy = turn_right(i+1, new_x, new_y)
                 nx, ny = x + xx, y + yy
 
-                if 0 <= nx < N and 0 <= ny < N and visited[nx][ny] < 2 and graph[nx][ny] == 0:
+                if 0 <= nx < N and 0 <= ny < N and graph[nx][ny] == 0:
                     q.append((nx, ny, xx, yy))
-                    visited[nx][ny] += 1
                     count += 1
                     break
 
 
 N = int(input())
 graph = [list(map(int, input().split())) for _ in range(N)]
-visited = [[0 for _ in range(N)] for _ in range(N)]
 
 pos_x, pos_y = 0, 0
 if graph[0][1] == 0:

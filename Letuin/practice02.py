@@ -1,33 +1,39 @@
 """
-추첨 조작
+추첨 조작 : 해시 테이블
 """
 
-from collections import deque
-
 N = int(input())
-ball = deque(map(int, input().split()))
-letuin = list(map(int, input().split()))
-tmp = letuin.copy()
+cylinder = list(map(int, input().split()))
+tmp = list(map(int, input().split()))
 
+if N == 1:
+    if cylinder[0] == tmp[0]:
+        print(1)
+        print(tmp[0])
+    else:
+        print(2)
+        print(tmp[0])
+    exit()
+
+letuin = [0] * (N+1)
+for idx, val in enumerate(tmp):
+    letuin[val] = idx+1
+
+start, end = 0, N-1
 result = []
-while ball:
-    left, right = ball[0], ball[-1]
+while start <= end:
+    left, right = cylinder[start], cylinder[end]
 
-    for i in range(len(letuin)):
-        if tmp[i] == left:
-            result.append(tmp[i])
-            tmp.remove(tmp[i])
-            ball.popleft()
-            break
-        if tmp[i] == right:
-            result.append(tmp[i])
-            tmp.remove(tmp[i])
-            ball.pop()
-            break
+    if letuin[left] < letuin[right]:
+        result.append(left)
+        start += 1
+    else:
+        result.append(right)
+        end -= 1
 
 count = 0
-for i in range(len(result)):
-    if result[i] == letuin[i]:
+for i in range(N):
+    if result[i] == tmp[i]:
         count += 1
 
 if count == N:
@@ -37,5 +43,5 @@ elif count == N-1:
 elif count == N-2:
     print(3)
 else:
-    print('ggwang')
+    print("fail")
 print(*result)
