@@ -3,16 +3,15 @@ author : Lee Sang Min
 github : https://github.com/sangm1n
 e-mail : dltkd96als@naver.com
 
-title : 입국심사
+title : 합이 0인 네 정수
 description : Binary Search
 """
 
 from collections import defaultdict
-import sys
-input = sys.stdin.readline
 
 N = int(input())
 A, B, C, D = [], [], [], []
+
 for _ in range(N):
     a, b, c, d = map(int, input().split())
     A.append(a)
@@ -21,17 +20,14 @@ for _ in range(N):
     D.append(d)
 
 AB = defaultdict(int)
-for i in range(N):
-    for j in range(N):
-        ab = A[i] + B[j]
-        AB[ab] += 1
+for a in A:
+    for b in B:
+        AB[a+b] += 1
 
 result = 0
-for i in range(N):
-    for j in range(N):
-        cd = -(C[i] + D[j])
-
-        if cd in AB:
-            result += AB[cd]
+for c in C:
+    for d in D:
+        if -(c+d) in AB:
+            result += AB[-(c+d)]
 
 print(result)
