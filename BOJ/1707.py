@@ -10,42 +10,38 @@ description : BFS
 from collections import deque
 
 
-def bfs(n, visited, check):
+def bfs(x, visited):
     q = deque()
-    q.append(n)
-    visited[n] = True
-    check[n] = 1
+    q.append(x)
+    visited[x] = 1
 
     while q:
-        x = q.popleft()
+        v = q.popleft()
 
-        for nx in graph[x]:
-            if not visited[nx]:
-                q.append(nx)
-                check[nx] = check[x] * -1
-                visited[nx] = True
-            elif check[nx] == check[x]:
+        for i in graph[v]:
+            if visited[i] == 0:
+                q.append(i)
+                visited[i] = visited[v] * (-1)
+            elif visited[i] == visited[v]:
                 return False
-
     return True
 
 
-K = int(input())
-for _ in range(K):
+T = int(input())
+for _ in range(T):
     V, E = map(int, input().split())
-    graph = [[] for _ in range(V+1)]
+    graph = [[] for _ in range(V + 1)]
+    visited = [0 for _ in range(V + 1)]
 
     for _ in range(E):
         a, b = map(int, input().split())
         graph[a].append(b)
         graph[b].append(a)
 
-    visited = [False] * (V+1)
-    check = [0] * (V+1)
-
     flag = True
-    for i in range(1, len(graph)):
-        if not visited[i] and not bfs(i, visited, check):
+    for i in range(1, V + 1):
+        if not visited[i] and not bfs(i, visited):
             flag = False
+            break
 
     print("YES" if flag else "NO")
